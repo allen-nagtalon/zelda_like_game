@@ -6,6 +6,7 @@ class Game:
 
     pygame.init()
     self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
+    pygame.display.set_caption('A Zelda Clone')
     self.clock = pygame.time.Clock()
 
   def run(self):
