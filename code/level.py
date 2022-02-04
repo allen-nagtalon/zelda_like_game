@@ -18,16 +18,7 @@ class Level:
     self.create_map()
 
   def create_map(self):
-    for r_ind, row in enumerate(WORLD_MAP):
-      for c_ind, tile in enumerate(row):
-        x = c_ind * TILESIZE
-        y = r_ind * TILESIZE
-
-        if tile == 'x':
-          Tile((x, y), [self.visible_sprites, self.obstacle_sprites])
-
-        if tile == 'p':
-          self.player = Player((x, y), [self.visible_sprites], self.obstacle_sprites)
+    self.player = Player((2000, 1500), [self.visible_sprites], self.obstacle_sprites)
 
   def run(self):
     self.visible_sprites.custom_draw(self.player)
