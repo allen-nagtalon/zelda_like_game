@@ -1,8 +1,10 @@
+import enum
 import pygame
 from settings import *
 from tile import Tile
 from player import Player
 from debug import debug
+from support import import_csv_layout
 
 class Level:
   def __init__(self):
@@ -18,6 +20,24 @@ class Level:
     self.create_map()
 
   def create_map(self):
+    layouts = {
+      'boundary': import_csv_layout('../map/map_FloorBlocks.csv'),
+      'grass': import_csv_layout('../map/map_Grass.csv'),
+      'object': import_csv_layout('../map/map_Objects.csv'),
+    }
+    for style, layout in layouts.items():
+      for r_ind, row in enumerate(layout):
+        for c_ind, tile in enumerate(row):
+          if tile != '-1':
+            x = c_ind * TILESIZE
+            y = r_ind * TILESIZE
+            if style == 'boundary':
+              Tile((x, y), [self.obstacle_sprites], 'invisible')
+            if style == 'grass':
+              pass
+            if style == 'object':
+              pass
+
     self.player = Player((2000, 1500), [self.visible_sprites], self.obstacle_sprites)
 
   def run(self):
