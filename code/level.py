@@ -45,12 +45,13 @@ class Level:
             if style == 'large_object':
               surf = graphics['large_objects'][int(tile)]
               Tile((x, y), [self.visible_sprites, self.obstacle_sprites], 'large_object', surf)
-# 1:47:17
+
     self.player = Player((2000, 1500), [self.visible_sprites], self.obstacle_sprites)
 
   def run(self):
     self.visible_sprites.custom_draw(self.player)
     self.visible_sprites.update()
+    debug(self.player.status)
 
 class YSortCameraGroup(pygame.sprite.Group):
   def __init__(self):
