@@ -3,6 +3,7 @@ import pygame
 from settings import *
 from tile import Tile
 from player import Player
+from enemy import Enemy
 from debug import debug
 from support import *
 from random import choice
@@ -37,6 +38,7 @@ class Level:
       'boundary': import_csv_layout('../map/map_FloorBlocks.csv'),
       'grass': import_csv_layout('../map/map_Grass.csv'),
       'large_object': import_csv_layout('../map/map_LargeObjects.csv'),
+      'entities': import_csv_layout('../map/map_Entities.csv')
     }
     graphics = {
       'grass': import_folder('../graphics/grass'),
@@ -57,15 +59,18 @@ class Level:
             if style == 'large_object':
               surf = graphics['large_objects'][int(tile)]
               Tile((x, y), [self.visible_sprites, self.obstacle_sprites], 'large_object', surf)
-
-    self.player = Player(
-      (2300, 1400), 
-      [self.visible_sprites], 
-      self.obstacle_sprites, 
-      self.create_attack, 
-      self.destroy_attack,
-      self.create_magic
-    )
+            if style == 'entities':
+              if tile == '394':
+                self.player = Player(
+                  (x, y), 
+                  [self.visible_sprites], 
+                  self.obstacle_sprites, 
+                  self.create_attack, 
+                  self.destroy_attack,
+                  self.create_magic
+                )
+              else:
+                Enemy('squid', (x, y), [self.visible_sprites])
 
   def destroy_attack(self):
     if self.current_attack:
