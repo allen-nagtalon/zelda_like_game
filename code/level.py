@@ -85,7 +85,8 @@ class Level:
                   monster_name, 
                   (x, y), 
                   [self.visible_sprites, self.attackable_sprites], 
-                  self.obstacle_sprites
+                  self.obstacle_sprites,
+                  self.damage_player
                 )
 
   def destroy_attack(self):
@@ -103,6 +104,13 @@ class Level:
               target_sprite.kill()
             else:
               target_sprite.get_damage(self.player, attack_sprite.sprite_type)
+
+  def damage_player(self, amount, attack_type):
+    if self.player.vunerable:
+      self.player.health -= amount
+      self.player.vunerable = False
+      self.player.hurt_time = pygame.time.get_ticks()
+
 
   def run(self):
     self.visible_sprites.custom_draw(self.player)
