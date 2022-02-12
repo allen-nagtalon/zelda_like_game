@@ -1,9 +1,11 @@
 import enum
+from tokenize import group
 import pygame
 from settings import *
 from tile import Tile
 from player import Player
 from enemy import Enemy
+from particles import AnimationPlayer
 from debug import debug
 from support import *
 from random import choice
@@ -28,6 +30,8 @@ class Level:
     self.create_map()
 
     self.ui = UI()
+
+    self.animation_player = AnimationPlayer()
 
   def create_attack(self):
     self.current_attack = Weapon(self.player, [self.visible_sprites, self.attack_sprites])
@@ -101,6 +105,8 @@ class Level:
         if collision_sprites:
           for target_sprite in collision_sprites:
             if target_sprite.sprite_type == 'grass':
+              pos = target_sprite.rect.center
+              self.animation_player.create_grass_particles(pos, [self.visible_sprites])
               target_sprite.kill()
             else:
               target_sprite.get_damage(self.player, attack_sprite.sprite_type)
