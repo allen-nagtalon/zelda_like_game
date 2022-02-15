@@ -6,6 +6,7 @@ from tile import Tile
 from player import Player
 from enemy import Enemy
 from particles import AnimationPlayer
+from magic import MagicPlayer
 from debug import debug
 from support import *
 from random import choice, randint
@@ -32,12 +33,17 @@ class Level:
     self.ui = UI()
 
     self.animation_player = AnimationPlayer()
+    self.magic_player = MagicPlayer(self.animation_player)
 
   def create_attack(self):
     self.current_attack = Weapon(self.player, [self.visible_sprites, self.attack_sprites])
 
   def create_magic(self, style, strength, cost):
-    pass
+    if style == 'heal':
+      self.magic_player.heal(self.player, strength, cost, [self.visible_sprites])
+    
+    if style == 'flame':
+      self.magic_player.flame(self.player, cost, [self.visible_sprites, self.attack_sprites])
 
   def create_map(self):
     layouts = {
