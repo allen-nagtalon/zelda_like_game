@@ -12,6 +12,7 @@ from support import *
 from random import choice, randint
 from weapon import Weapon
 from ui import UI
+from upgrade import Upgrade
 
 class Level:
   def __init__(self):
@@ -32,6 +33,7 @@ class Level:
     self.create_map()
 
     self.ui = UI()
+    self.upgrade = Upgrade(self.player)
 
     self.animation_player = AnimationPlayer()
     self.magic_player = MagicPlayer(self.animation_player)
@@ -143,7 +145,7 @@ class Level:
     self.ui.display(self.player)
 
     if self.game_paused:
-      pass
+      self.upgrade.display()
     else:
       self.visible_sprites.update()
       self.visible_sprites.enemy_update(self.player)
